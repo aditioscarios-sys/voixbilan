@@ -1,0 +1,17 @@
+
+{
+  "transcription": "Ùn sà tomato kànnú àtɔn. Kànnú ɖokpó bló chaki we, àtɔn lɛ bló chaki ayizɛ́n.",
+  "langue": "fon",
+  "traduction_francais": "J'ai vendu trois paniers de tomates. Un panier fait 2 000 F, les trois ont fait 6 000 F.",
+  "operations": [
+    {
+      "type": "vente",
+      "montant": 6000,
+      "produit": "panier de tomates",
+      "quantite": 3,
+      "client": null,
+      "description": "Vente de 3 paniers de tomates à 2 000 FCFA l'unité"
+    }
+  ],
+  "a_confirmer": null
+}

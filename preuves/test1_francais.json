@@ -1,0 +1,32 @@
+
+{
+  "transcription": "Bonjour, aujourd'hui j'ai vendu pour 45000 francs de marchandises, j'ai payé 3000 francs pour le transport et le repas, et j'ai laissé 5000 francs à crédit pour la cliente Tantie Reine.",
+  "langue": "francais",
+  "operations": [
+    {
+      "type": "vente",
+      "montant": 45000,
+      "produit": "marchandises",
+      "quantite": null,
+      "client": null,
+      "description": "Vente de marchandises"
+    },
+    {
+      "type": "depense",
+      "montant": 3000,
+      "produit": null,
+      "quantite": null,
+      "client": null,
+      "description": "Transport et repas"
+    },
+    {
+      "type": "credit_accorde",
+      "montant": 5000,
+      "produit": null,
+      "quantite": null,
+      "client": "Tantie Reine",
+      "description": "Crédit accordé à Tantie Reine"
+    }
+  ],
+  "a_confirmer": null
+}

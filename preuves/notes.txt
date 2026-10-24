@@ -1,0 +1,28 @@
+TESTS DU CERVEAU VOIXBILAN 
+
+Test 1 - Français (vocal) : "J'ai vendu pour 45 000 francs, payé 3 000 de transport et repas, Tantie Reine a pris 5 000 à crédit."
+Résultat : parfait (vente 45 000, dépense 3 000, crédit 5 000 Tantie Reine). Environ 2 min (ancien réglage).
+
+Test 2 - Fon du Bénin (vocal) : "J'ai vendu 3 bassines de tomates à 2 000 chacune."
+Résultat : montants justes (vente 6 000, 3 x 2 000). Produit compris comme "paniers". 40 s.
+
+Test 3 - Fon (vocal) : "J'ai payé 1 500 de zémidjan."
+Résultat : parfait (dépense 1 500, transport). 95 s.
+
+Test 4 - Fon (vocal), modèle "lite" : "Maman Rose a pris du piment à crédit pour 1 000."
+Résultat : faux (riz, achat de stock, sans montant), mais l'IA n'a rien inventé et a demandé confirmation. 1,7 s.
+
+Test 5 - Fon (vocal), modèle complet avec réflexion faible : même phrase que le test 4.
+Résultat : parfait (crédit 1 000, piment, Maman Rose). 11,9 s.
+
+Limites : 3 phrases simples, une seule voix, sans bruit. À confirmer avec des commerçantes.
+
+Test 9 - WhatsApp, fon parlé, montants dits en fon du Bénin (2 voix différentes)
+Résultat : montants et types d'opérations faux. Le fon avec nombres en fon n'est pas fiable.
+
+Test 10 - WhatsApp, fon parlé, montants dits en français
+Résultat : dépense 1 500 (zémidjan) et crédit 1 000 (piment) corrects, en 2,7 s.
+Le nom de la cliente n'a pas été compris : le bot a posé la question au lieu d'inventer.
+
+Conclusion : fon + chiffres en français = solution réaliste pour le terrain.
+fon + chiffres en fon a besoin d'amélioration par la suite.

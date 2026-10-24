@@ -1,0 +1,30 @@
+# Secrets
+.env
+
+# Connexions WhatsApp (NE JAMAIS PUBLIER)
+auth_baileys/
+whatsapp/auth_baileys/
+.wwebjs_auth/
+.wwebjs_cache/
+whatsapp/.wwebjs_auth/
+whatsapp/.wwebjs_cache/
+
+# Données des commerçantes
+donnees.json
+whatsapp/donnees.json
+
+# Vocaux et images de test
+*.ogg
+*.mp3
+*.m4a
+*.wav
+*.jpg
+*.png
+
+# Outils installés
+node_modules/
+.venv/
+__pycache__/
+# Exception : les captures de preuves vérifiées
+!preuves/*.jpg
+!preuves/*.png

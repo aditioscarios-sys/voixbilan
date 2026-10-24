@@ -1,0 +1,16 @@
+{
+  "transcription": "N sú càkì ɖòkpó àdàlì nú kɛ̀kɛ́nɔ́",
+  "langue": "fon",
+  "traduction_francais": "J'ai payé 1 500 francs au conducteur de taxi-moto (kékéno)",
+  "operations": [
+    {
+      "type": "depense",
+      "montant": 1500,
+      "produit": "transport",
+      "quantite": null,
+      "client": null,
+      "description": "Frais de déplacement payés au kékéno (conducteur de moto)"
+    }
+  ],
+  "a_confirmer": null
+}

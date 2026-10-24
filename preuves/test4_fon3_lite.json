@@ -1,0 +1,16 @@
+{
+  "transcription": "Mɔmɔ rose xlɔtaki akɔ caki lupu",
+  "langue": "fon",
+  "traduction_francais": "Maman Rose a acheté un sac de riz",
+  "operations": [
+    {
+      "type": "achat_stock",
+      "montant": null,
+      "produit": "riz",
+      "quantite": 1,
+      "client": null,
+      "description": "Achat d'un sac de riz par Maman Rose"
+    }
+  ],
+  "a_confirmer": "Quel est le montant payé pour le sac de riz ?"
+}

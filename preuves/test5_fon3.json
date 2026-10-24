@@ -1,0 +1,16 @@
+{
+  "transcription": "Maman Rose xɔ taki axɔ́ caki ɖokpo nù",
+  "langue": "fon",
+  "traduction_francais": "Maman Rose a acheté du piment à crédit pour mille francs",
+  "operations": [
+    {
+      "type": "credit_accorde",
+      "montant": 1000,
+      "produit": "piment",
+      "quantite": null,
+      "client": "Maman Rose",
+      "description": "Vente de piment à crédit à Maman Rose"
+    }
+  ],
+  "a_confirmer": null
+}
