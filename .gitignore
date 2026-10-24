@@ -28,3 +28,6 @@ __pycache__/
 # Exception : les captures de preuves vérifiées
 !preuves/*.jpg
 !preuves/*.png
+# Documents privés du projet (restent sur l'ordinateur)
+PROJET.md
+PRIVE.md
