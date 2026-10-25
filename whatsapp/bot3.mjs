@@ -226,6 +226,27 @@ async function activer(code, id) {
   });
   return preparer(c);
 }
+// ---------- Démonstration : code DEMO ----------
+const EMAIL_DEMO = (process.env.DEMO_EMAIL || "demo@voixbilan.com").toLowerCase();
+
+async function activerDemo(id) {
+  const org = await une("SELECT organisation_id AS id FROM utilisateurs WHERE email = ?", [EMAIL_DEMO]);
+  if (!org) return null;
+  let groupe = await une("SELECT id FROM groupes WHERE organisation_id = ? AND nom = 'Testeurs'", [org.id]);
+  if (!groupe) {
+    const r = await requete("INSERT INTO groupes (organisation_id, nom, type, description, date_creation) VALUES (?, 'Testeurs', 'autre', 'Visiteurs qui testent le bot', ?)", [org.id, new Date()]);
+    groupe = { id: r.insertId };
+  }
+  const maintenant = new Date();
+  await transaction(async (cx) => {
+    await cx.execute("UPDATE commercantes SET identifiant_whatsapp = NULL WHERE identifiant_whatsapp = ?", [id]);
+    await cx.execute(
+      "INSERT INTO commercantes (organisation_id, groupe_id, nom, identifiant_whatsapp, langue, activite, accord_suivi, accord_vocaux, activee_le, actif, date_creation) VALUES (?, ?, ?, ?, 'francais', 'Test de démonstration', 1, 0, ?, 1, ?)",
+      [org.id, groupe.id, `Testeur ${String(id).slice(-4)}`, id, maintenant, maintenant]
+    );
+  });
+  return preparer(await une(`${SELECT_COMMERCANTE} WHERE c.identifiant_whatsapp = ?`, [id]));
+}
 
 // ---------- Calculs (depuis la base) ----------
 async function totauxDuJour(cid) {
@@ -371,6 +392,14 @@ async function accueillirInconnu(m, id, texteRecu, audio, sock, repondre) {
   const essais = (essaisCode[id] = (essaisCode[id] || []).filter((t) => maintenant - t < 3600000));
   if (essais.length >= 5) { console.log(`   Trop d'essais de code pour ${id} : ignoré`); return; }
 
+    // Code DEMO : le visiteur teste VoixBilan dans l'organisation de démonstration
+  if (texteRecu && ["demo", "démo"].includes(normaliser(texteRecu))) {
+    const c = await activerDemo(id);
+    if (!c) return repondre("La démonstration n'est pas disponible pour le moment.");
+    delete essaisCode[id];
+    console.log(`   Démonstration activée : ${c.nom}`);
+    return repondre(`Bienvenue dans la démonstration de VoixBilan.\nTon numéro est relié à l'organisation fictive *${c.org_nom}*, sous le nom *${c.nom}*.\n\nEssaie maintenant d'envoyer un vocal ou un message, par exemple :\n« J'ai vendu pour 5 000 francs, payé 500 de transport, et Maman Rose a pris 1 000 à crédit. »\n\nTon message apparaîtra sur le tableau de bord de démonstration. Écris *aide* pour voir tout ce que tu peux faire.`);
+  }
   let code = texteRecu ? extraireCode(texteRecu) : null;
   if (!code && audio) {
     essais.push(maintenant); // chaque vocal analysé compte comme un essai

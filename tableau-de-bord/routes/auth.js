@@ -223,7 +223,7 @@ router.get("/mot-de-passe-oublie", (req, res) => {
 router.post("/mot-de-passe-oublie", a(async (req, res) => {
   const email = sec.normEmail(req.body.email);
   const u = await db.une("SELECT id, nom, actif FROM utilisateurs WHERE email = ?", [email]);
-  if (u && u.actif) {
+    if (u && u.actif && email !== (process.env.DEMO_EMAIL || "demo@voixbilan.com").toLowerCase()) {
     const jeton = await creerJeton("reinitialisation", { utilisateurId: u.id }, HEURE);
     await envoyer({
       a: email,

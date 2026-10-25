@@ -18,6 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use(chargerSession);
+app.use(require("./lib/demo").protegerDemo);
 app.use(require("./routes/auth"));
 app.use(require("./routes/tableau"));
 app.use(require("./routes/compte"));

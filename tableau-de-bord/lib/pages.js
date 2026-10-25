@@ -1,5 +1,6 @@
 // lib/pages.js : mise en page commune (design sobre, sans emoji, responsive)
 const { PAYS, ROLES } = require("./reference");
+const { estDemo } = require("./demo");
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const note = (type, texte) => `<div class="note ${type}">${texte}</div>`;
@@ -218,7 +219,12 @@ function pageAuth(titre, contenu, large = false) {
   return `${tete(titre)}<body class="acces"><div class="panneau${large ? " large" : ""}"><div class="marque">VoixBilan</div>${contenu}</div>
   <p class="pied">Carnet de comptes vocal pour les commerçantes</p>${SCRIPT}</body></html>`;
 }
-
+// Bandeau affiché dans le compte de démonstration
+function bandeauDemo(req) {
+  if (!estDemo(req)) return "";
+  const numero = process.env.NUMERO_BOT_AFFICHE ? ` (${esc(process.env.NUMERO_BOT_AFFICHE)})` : "";
+  return `<div class="note orange" style="margin-bottom:20px"><strong>Compte de démonstration :</strong> les commerçantes et les chiffres sont fictifs. Pour tester avec votre téléphone, envoyez « DEMO » au numéro WhatsApp de VoixBilan${numero} : vos messages apparaîtront ici, dans le groupe « Testeurs ».</div>`;
+}
 function pageApp(titre, req, contenu, actif = "") {
   const u = req.utilisateur;
   const o = req.organisation;
@@ -236,7 +242,7 @@ function pageApp(titre, req, contenu, actif = "") {
       <nav>${menu.join("")}</nav>
       <div class="bas"><div class="utilisateur">${esc(u.nom)}<span>${esc(ROLES[u.role])}</span></div><a href="/deconnexion">Se déconnecter</a></div>
     </aside>
-    <main><div class="contenu">${contenu}</div></main>
+   <main><div class="contenu">${bandeauDemo(req)}${contenu}</div></main>
   </div>${SCRIPT}</body></html>`;
 }
 

@@ -261,7 +261,7 @@ router.get("/rapports", exigerConnexion, a(async (req, res) => {
   const lignesDetail = [...r.lignes].sort((x, y) => y.ventes - x.ventes).map((l) => `<tr>
     <td data-label="Commerçante">${esc(l.c.nom)}</td><td data-label="Groupe">${esc(l.c.groupe_nom || "Sans groupe")}</td>
     <td data-label="Jours actifs">${l.jours}</td><td data-label="Ventes" class="montant">${m(l.ventes)}</td>
-    <td data-label="Bénéfice" class="montant">${m(l.benefice)}</td><td data-label="Dû à la fin de la période" class="montant">${m(l.credits)}</td></tr>`).join("");
+    <td data-label="Bénéfice" class="montant">${m(l.benefice)}</td><td data-label="À récupérer (fin de période)" class="montant">${m(l.credits)}</td></tr>`).join("");
 
   let blocAlertes;
   if (!r.alertes) {
@@ -308,13 +308,13 @@ router.get("/rapports", exigerConnexion, a(async (req, res) => {
           ${chiffre("Crédits accordés", m(t.accordes), "sur la période")}
           ${chiffre("Remboursements reçus", m(t.rembourses), "sur la période")}
           ${chiffre("Taux de recouvrement", t.accordes > 0 ? pourcent(t.rembourses / t.accordes) : "—", "remboursés / accordés")}
-          ${chiffre("Encore dû", m(t.credits), "à la fin de la période")}
+          ${chiffre("À récupérer auprès des clients", m(t.credits), "à la fin de la période")}
         </div></div>
 
       ${blocGroupes}
 
       <div class="bloc"><h2><span class="numero">${n(6)}.</span>Détail par commerçante</h2>
-        <table class="responsive"><thead><tr><th>Commerçante</th><th>Groupe</th><th>Jours actifs</th><th class="montant">Ventes</th><th class="montant">Bénéfice</th><th class="montant">Dû à la fin de la période</th></tr></thead><tbody>${lignesDetail}</tbody></table>
+        <table class="responsive"><thead><tr><th>Commerçante</th><th>Groupe</th><th>Jours actifs</th><th class="montant">Ventes</th><th class="montant">Bénéfice</th><th class="montant">À récupérer (fin de période)</th></tr></thead><tbody>${lignesDetail}</tbody></table>
       </div>
 
       <div class="bloc"><h2><span class="numero">${n(7)}.</span>Points d'attention</h2>${blocAlertes}</div>
