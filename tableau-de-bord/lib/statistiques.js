@@ -50,7 +50,7 @@ async function listeCommercantes(orgId, groupe = null) {
   const params = [orgId];
   const filtre = filtreGroupe(groupe, params);
   return db.requete(
-    `SELECT c.id, c.nom, c.groupe_id, g.nom AS groupe_nom, c.activee_le, c.date_creation,
+    `SELECT c.id, c.nom, c.groupe_id, g.nom AS groupe_nom, c.activee_le, c.date_creation,  c.langue,
        (SELECT MAX(m.date_message) FROM messages m WHERE m.commercante_id = c.id) AS dernier_message
      FROM commercantes c LEFT JOIN groupes g ON g.id = c.groupe_id
      WHERE c.organisation_id = ? AND c.actif = 1${filtre} ORDER BY c.nom`,

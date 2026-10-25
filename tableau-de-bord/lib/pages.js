@@ -223,7 +223,7 @@ function pageApp(titre, req, contenu, actif = "") {
   const u = req.utilisateur;
   const o = req.organisation;
   const lien = (href, texte, cle) => `<a href="${href}" class="${actif === cle ? "actif" : ""}">${texte}</a>`;
-      const menu = [lien("/", "Tableau de bord", "accueil"), lien("/commercantes", "Commerçantes", "commercantes"), lien("/groupes", "Groupes", "groupes"), lien("/alertes", "Alertes", "alertes")];
+      const menu = [lien("/", "Tableau de bord", "accueil"), lien("/commercantes", "Commerçantes", "commercantes"), lien("/groupes", "Groupes", "groupes"), lien("/alertes", "Alertes", "alertes"), lien("/rapports", "Rapports", "rapports")];
   if (u.role === "administrateur") menu.push(lien("/equipe", "Équipe", "equipe"));
   menu.push(lien("/parametres", "Paramètres", "parametres"));
   return `${tete(titre)}<body>
