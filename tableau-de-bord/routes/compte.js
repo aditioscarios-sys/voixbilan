@@ -29,12 +29,12 @@ router.get("/", exigerConnexion, (req, res) => {
   res.send(pageApp("Tableau de bord", req, `<h1>Bonjour, ${esc(u.nom)}</h1>
     <p class="sous-titre">${esc(o.nom)} · ${esc(o.ville)}, ${esc(o.pays)}</p>
     ${req.query.bienvenue ? note("vert", "Votre adresse e-mail est confirmée. Bienvenue sur VoixBilan.") : ""}
-    <div class="bloc"><h2>Pour bien démarrer</h2><ol class="etapes">
-      <li>Créez vos groupes, par marché ou par projet.</li>
-      <li>Ajoutez vos commerçantes : chacune reçoit un code d'activation à 6 chiffres.</li>
+        <div class="bloc"><h2>Pour bien démarrer</h2><ol class="etapes">
+      <li><a class="lien" href="/groupes">Créez vos groupes</a>, par marché ou par projet.</li>
+      <li><a class="lien" href="/commercantes/ajouter">Ajoutez vos commerçantes</a> : chacune reçoit un code d'activation à 6 chiffres.</li>
       <li>Chaque commerçante envoie son code au numéro WhatsApp de VoixBilan, puis ses vocaux chaque jour.</li>
       <li>${equipe}</li>
-    </ol><p class="petit">Les commerçantes, les groupes, les alertes et les rapports arrivent dans la prochaine mise à jour de votre espace.</p></div>`, "accueil"));
+        </ol><p class="petit" style="margin:12px 0 0">Les chiffres de toutes vos commerçantes, le graphique et les alertes arrivent dans la prochaine mise à jour.</p></div>`, "accueil"));
 });
 
 // ---------- Paramètres ----------

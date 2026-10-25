@@ -31,3 +31,6 @@ __pycache__/
 # Documents privés du projet (restent sur l'ordinateur)
 PROJET.md
 PRIVE.md
+# Connexion WhatsApp du nouveau bot et vocaux conservés (jamais publiés)
+auth_bot3/
+vocaux/

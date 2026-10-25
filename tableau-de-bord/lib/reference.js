@@ -39,7 +39,7 @@ const DESCRIPTION_ROLES = {
   lecture: "Consulte les chiffres et télécharge les rapports, sans rien modifier.",
 };
 
-// Langues des commerçantes (utilisées à partir de la livraison B)
+// Langues des commerçantes
 const STATUTS_LANGUE = {
   disponible: "Disponible",
   montants_fr: "Disponible, montants en français",
@@ -64,6 +64,17 @@ const LANGUES_PAR_PAYS = {
   "Tchad": [L("arabe_tchadien", "Arabe tchadien", "bientot"), L("sara", "Sara", "bientot")],
   "Guinée-Conakry": [L("pular", "Pular", "experimental"), L("soussou", "Soussou", "experimental"), L("malinke", "Malinké", "bientot")],
 };
-const languesPour = (pays) => [L("francais", "Français", "disponible"), ...(LANGUES_PAR_PAYS[pays] || [])];
 
-module.exports = { PAYS, infosPays, DEVISES, TYPES_ORGANISATION, ROLES, DESCRIPTION_ROLES, STATUTS_LANGUE, languesPour };
+// Le français est toujours proposé, en premier
+const languesPour = (pays) => [L("francais", "Français", "disponible"), ...(LANGUES_PAR_PAYS[pays] || [])];
+const infoLangue = (pays, code) => languesPour(pays).find((l) => l.code === code) || L(code, code, "bientot");
+
+// Consigne à donner à la commerçante selon le statut de sa langue
+function consigneLangue(langue) {
+  if (langue.statut === "disponible") return "La commerçante peut parler ou écrire en français.";
+  if (langue.statut === "montants_fr") return `Expliquez à la commerçante de parler en ${langue.nom}, mais de dire les montants en français.`;
+  if (langue.statut === "experimental") return `Le ${langue.nom} est en test : le bot demandera une confirmation avant d'enregistrer chaque message. Les montants dits en français restent les plus fiables.`;
+  return `Le ${langue.nom} n'est pas encore compris par l'IA. Pour l'instant, la commerçante parle en français.`;
+}
+
+module.exports = { PAYS, infosPays, DEVISES, TYPES_ORGANISATION, ROLES, DESCRIPTION_ROLES, STATUTS_LANGUE, languesPour, infoLangue, consigneLangue };

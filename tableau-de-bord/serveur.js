@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 app.use(chargerSession);
 app.use(require("./routes/auth"));
 app.use(require("./routes/compte"));
-
+app.use(require("./routes/commercantes"));
 // Page introuvable
 app.use((req, res) => {
   res.status(404).send(pageAuth("Page introuvable", `<h1>Page introuvable</h1><p class="sous-titre">Cette page n'existe pas.</p><a class="bouton" href="/">Retour</a>`));

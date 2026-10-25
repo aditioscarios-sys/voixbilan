@@ -105,7 +105,20 @@ details.volet[open]>summary{background:var(--blanc);color:var(--texte);border-co
 
 .etapes{margin:0;padding-left:20px}.etapes li{margin-bottom:8px}
 .texte-legal p{margin:0 0 12px}
-
+/* Commerçantes, groupes, chiffres */
+.entete-flex{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.filtres{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;gap:12px;align-items:end;margin-bottom:20px}
+.chiffres{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:20px}
+.chiffre{background:var(--blanc);border:1px solid var(--ligne);border-radius:8px;padding:16px 18px;min-width:0}
+.chiffre .libelle{font-size:13px;color:var(--doux)}
+.chiffre .valeur{font-size:20px;font-weight:600;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.code{font-size:34px;font-weight:700;letter-spacing:.18em;font-variant-numeric:tabular-nums;margin:4px 0 14px}
+.code-bloc{border-left:3px solid var(--accent)}
+.grille-deux{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.consigne{background:var(--accent-clair);color:var(--accent);padding:10px 14px;border-radius:6px;font-size:14px}
+.montant{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vide{color:var(--doux);font-size:14px;margin:0}
+@media(max-width:860px){.filtres,.grille-deux{grid-template-columns:minmax(0,1fr)}.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}.chiffre .valeur{font-size:17px}.code{font-size:28px}}
 /* Tablette et téléphone */
 @media(max-width:860px){
   .cadre{grid-template-columns:minmax(0,1fr)}
@@ -198,7 +211,7 @@ function pageApp(titre, req, contenu, actif = "") {
   const u = req.utilisateur;
   const o = req.organisation;
   const lien = (href, texte, cle) => `<a href="${href}" class="${actif === cle ? "actif" : ""}">${texte}</a>`;
-  const menu = [lien("/", "Tableau de bord", "accueil")];
+    const menu = [lien("/", "Tableau de bord", "accueil"), lien("/commercantes", "Commerçantes", "commercantes"), lien("/groupes", "Groupes", "groupes")];
   if (u.role === "administrateur") menu.push(lien("/equipe", "Équipe", "equipe"));
   menu.push(lien("/parametres", "Paramètres", "parametres"));
   return `${tete(titre)}<body>
