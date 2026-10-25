@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VoixBilan | Ton bilan en un vocal</title>
+<meta name="description" content="VoixBilan : un carnet de comptes par la voix sur WhatsApp pour les commerçantes, et un tableau de bord de suivi pour les organisations qui les accompagnent.">
+<style>
+:root{--texte:#1c1c1c;--doux:#5f5f5f;--ligne:#e4e4e1;--fond:#f7f7f5;--blanc:#fff;--accent:#24513f;--accent-clair:#eef3f0;--whatsapp:#e7f6e9}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.6;color:var(--texte);background:var(--blanc)}
+a{color:var(--accent)}
+h1,h2,h3{line-height:1.25;margin:0}
+h1{font-size:44px;font-weight:700;letter-spacing:-.5px}
+h2{font-size:30px;font-weight:700;margin-bottom:14px}
+h3{font-size:18px;font-weight:600;margin-bottom:8px}
+p{margin:0 0 14px}
+.conteneur{max-width:1100px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+.fond{background:var(--fond)}
+.intro{color:var(--doux);font-size:18px;max-width:720px}
+.bouton{display:inline-flex;align-items:center;justify-content:center;height:46px;padding:0 22px;border-radius:6px;background:var(--accent);color:#fff;text-decoration:none;font-weight:500;border:1px solid var(--accent);font-size:15px}
+.bouton:hover{opacity:.92}
+.bouton.clair{background:var(--blanc);color:var(--texte);border-color:#cfcfcb}
+.boutons{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.petit{font-size:14px;color:var(--doux)}
+
+/* En-tête */
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);border-bottom:1px solid var(--ligne)}
+.barre{display:flex;align-items:center;justify-content:space-between;height:66px;gap:16px}
+.marque{font-size:20px;font-weight:700;color:var(--texte);text-decoration:none}
+nav.menu{display:flex;gap:24px}
+nav.menu a{color:var(--texte);text-decoration:none;font-size:15px}
+nav.menu a:hover{color:var(--accent)}
+.actions{display:flex;gap:10px}
+.actions .bouton{height:40px;padding:0 16px;font-size:14px}
+
+/* Accroche */
+.accroche{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding:72px 0}
+.accroche .slogan{color:var(--accent);font-weight:600;margin-bottom:10px;font-size:15px;text-transform:uppercase;letter-spacing:.06em}
+.accroche p.intro{margin-top:18px}
+
+/* Conversation WhatsApp dessinée */
+.telephone{background:var(--fond);border:1px solid var(--ligne);border-radius:22px;padding:18px;max-width:360px;margin-left:auto}
+.telephone .titre-conv{font-size:14px;font-weight:600;padding:4px 6px 12px;border-bottom:1px solid var(--ligne);margin-bottom:14px}
+.bulle{border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:14px;line-height:1.45;max-width:88%}
+.bulle.envoyee{background:var(--whatsapp);margin-left:auto}
+.bulle.recue{background:var(--blanc);border:1px solid var(--ligne)}
+.vocal{display:flex;align-items:center;gap:10px}
+.vocal .lecture{width:28px;height:28px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.onde{display:flex;align-items:center;gap:3px;height:22px}
+.onde span{display:block;width:3px;border-radius:2px;background:#7aa58f}
+.bulle .heure{display:block;text-align:right;font-size:11px;color:var(--doux);margin-top:4px}
+
+/* Cartes */
+.grille{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.carte{background:var(--blanc);border:1px solid var(--ligne);border-radius:10px;padding:22px}
+.numero{display:inline-flex;width:32px;height:32px;border-radius:50%;background:var(--accent-clair);color:var(--accent);font-weight:700;align-items:center;justify-content:center;margin-bottom:12px}
+.obstacle{font-size:14px;color:var(--doux);margin-bottom:6px}
+.chiffre-cle{font-size:34px;font-weight:700;color:var(--accent);line-height:1.1;margin-bottom:6px}
+.source{font-size:13px;color:var(--doux)}
+.encadre{border-left:3px solid var(--accent);background:var(--accent-clair);padding:20px 24px;border-radius:0 10px 10px 0;margin-top:28px}
+
+/* Langues */
+.langues{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.pastille{border:1px solid var(--ligne);border-radius:999px;padding:6px 14px;font-size:14px;background:var(--blanc)}
+.pastille strong{font-weight:600}
+.pastille.dispo{border-color:var(--accent);color:var(--accent)}
+
+/* Tarifs */
+.tarifs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:10px}
+.tarif .prix{font-size:30px;font-weight:700;margin:6px 0 2px}
+.tarif .prix span{font-size:15px;font-weight:400;color:var(--doux)}
+.calculateur{margin-top:28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px;align-items:center}
+.calculateur label{font-weight:600;display:block;margin-bottom:8px}
+.calculateur input{width:100%;height:46px;border:1px solid #cfcfcb;border-radius:6px;padding:0 12px;font-size:18px}
+.resultat{font-size:15px}
+.resultat strong{font-size:24px;display:block}
+
+/* Démo */
+.demo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.identifiants{font-family:Consolas,monospace;background:var(--fond);border-radius:6px;padding:10px 12px;margin:10px 0;font-size:15px}
+
+footer{border-top:1px solid var(--ligne);padding:32px 0;font-size:14px;color:var(--doux)}
+.pied{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pied a{color:var(--doux);margin-right:16px}
+
+/* Tablette et téléphone */
+@media(max-width:900px){
+  nav.menu{display:none}
+  .accroche{grid-template-columns:1fr;gap:32px;padding:48px 0}
+  .telephone{margin:0 auto}
+  .g3,.tarifs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .calculateur,.demo{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  h1{font-size:32px}
+  h2{font-size:24px}
+  section{padding:52px 0}
+  .g2,.g3,.tarifs{grid-template-columns:1fr}
+  .actions .bouton.clair{display:none}
+  .boutons .bouton{width:100%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="conteneur barre">
+    <a class="marque" href="#">VoixBilan</a>
+    <nav class="menu">
+      <a href="#reponse">Notre réponse</a>
+      <a href="#organisations">Organisations</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#demo">Démo</a>
+    </nav>
+    <div class="actions">
+      <a class="bouton clair" href="https://app.voixbilan.com/connexion">Se connecter</a>
+      <a class="bouton" href="https://app.voixbilan.com/inscription">Créer un compte</a>
+    </div>
+  </div>
+</header>
+
+<!-- 1. Accroche -->
+<div class="conteneur accroche">
+  <div>
+    <div class="slogan">Ton bilan en un vocal</div>
+    <h1>Le carnet de comptes des commerçantes, par la voix, sur WhatsApp.</h1>
+    <p class="intro">La commerçante raconte sa journée dans un vocal. VoixBilan enregistre ses ventes, ses dépenses et ses crédits. L'organisation qui l'accompagne suit ses progrès sur un tableau de bord, sans quitter son bureau.</p>
+    <div class="boutons">
+      <a class="bouton" href="#demo">Voir la démo</a>
+      <a class="bouton clair" href="https://app.voixbilan.com/inscription">Créer un compte</a>
+    </div>
+  </div>
+  <div class="telephone" aria-label="Exemple de conversation avec VoixBilan sur WhatsApp">
+    <div class="titre-conv">VoixBilan</div>
+    <div class="bulle envoyee">
+      <div class="vocal">
+        <span class="lecture"><svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="onde"><span style="height:8px"></span><span style="height:16px"></span><span style="height:10px"></span><span style="height:20px"></span><span style="height:12px"></span><span style="height:18px"></span><span style="height:8px"></span><span style="height:14px"></span><span style="height:20px"></span><span style="height:10px"></span><span style="height:16px"></span><span style="height:8px"></span></span>
+        <span class="petit">0:09</span>
+      </div>
+      <span class="heure">18:42</span>
+    </div>
+    <div class="bulle recue">
+      <strong>Enregistré.</strong><br>
+      - Vente : 5 000 F<br>
+      - Dépense : 500 F (transport)<br>
+      - Vente à crédit : 1 000 F (Maman Rose)<br><br>
+      <strong>Bénéfice estimé du jour : 5 500 F</strong>
+      <span class="heure">18:42</span>
+    </div>
+    <div class="bulle envoyee">Qui me doit de l'argent ?<span class="heure">18:43</span></div>
+    <div class="bulle recue">Maman Rose : 1 000 F<br><strong>Total à récupérer : 1 000 F</strong><span class="heure">18:43</span></div>
+  </div>
+</div>
+
+<!-- 2. Le problème -->
+<section class="fond" id="probleme">
+  <div class="conteneur">
+    <h2>Le problème</h2>
+    <div class="grille g2" style="margin-top:20px">
+      <div class="carte">
+        <div class="chiffre-cle">Plus de 9 sur 10</div>
+        <p>Au Bénin, plus de 9 actifs sur 10 travaillent dans l'économie informelle.</p>
+        <div class="source">Source : INSAE, ERI-ESI 2018</div>
+      </div>
+      <div class="carte">
+        <div class="chiffre-cle">69,4 %</div>
+        <p>Près de 7 unités informelles sur 10 sont dirigées par des femmes, et le commerce est leur premier secteur.</p>
+        <div class="source">Source : INSAE, ERI-ESI 2018</div>
+      </div>
+    </div>
+    <div class="grille g2" style="margin-top:20px">
+      <div class="carte">
+        <h3>Les commerçantes gèrent leurs comptes de tête</h3>
+        <p style="margin:0">Elles connaissent leur activité, mais rien n'est écrit pour en suivre l'évolution ou la prouver.</p>
+      </div>
+      <div class="carte">
+        <h3>Les organisations manquent de chiffres fiables</h3>
+        <p style="margin:0">Elles dépendent d'enquêtes ponctuelles, coûteuses et déclarées de mémoire, alors que leurs bailleurs attendent des résultats.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Notre réponse -->
+<section id="reponse">
+  <div class="conteneur">
+    <h2>Notre réponse : la commerçante parle, VoixBilan écrit</h2>
+    <p class="intro">Elle n'a pas besoin de savoir lire, écrire ou compter sur papier. Elle envoie un vocal sur WhatsApp, comme elle le fait déjà avec ses clients et sa famille. L'intelligence artificielle comprend et enregistre.</p>
+    <div class="grille g2" style="margin-top:24px">
+      <div class="carte">
+        <div class="obstacle">Écrire ses comptes prend du temps et demande de savoir lire et écrire.</div>
+        <h3>La voix suffit</h3>
+        <p style="margin:0">En français, ou dans sa langue : le fon aujourd'hui, d'autres langues en test.</p>
+      </div>
+      <div class="carte">
+        <div class="obstacle">Les applications de comptabilité demandent une installation et une formation.</div>
+        <h3>Rien à installer</h3>
+        <p style="margin:0">WhatsApp, qu'elle utilise déjà tous les jours.</p>
+      </div>
+      <div class="carte">
+        <div class="obstacle">Les enquêtes sont rares, coûteuses et faites de mémoire.</div>
+        <h3>Des chiffres chaque jour</h3>
+        <p style="margin:0">Enregistrés au moment où l'activité se passe.</p>
+      </div>
+      <div class="carte">
+        <div class="obstacle">Les rapports aux bailleurs prennent des jours de compilation.</div>
+        <h3>Des rapports en un clic</h3>
+        <p style="margin:0">Le tableau de bord se met à jour seul. Rapports en PDF et en Excel.</p>
+      </div>
+    </div>
+    <div class="encadre">
+      <h3>Et demain : un historique qui ouvre l'accès au crédit</h3>
+      <p style="margin:0">Chaque vocal construit, jour après jour, l'historique de son activité : ses ventes, ses dépenses, ses remboursements. Aujourd'hui, sans trace écrite, il est difficile de demander un prêt. Demain, avec son accord, cet historique pourra l'aider à obtenir un crédit auprès d'institutions financières partenaires. Nous préparons ces partenariats.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Comment ça marche -->
+<section class="fond" id="fonctionnement">
+  <div class="conteneur">
+    <h2>Comment ça marche</h2>
+    <div class="grille g3" style="margin-top:20px">
+      <div class="carte"><span class="numero">1</span><h3>L'organisation inscrit la commerçante</h3><p style="margin:0">Elle reçoit un code à 6 chiffres, qu'elle envoie au numéro WhatsApp de VoixBilan.</p></div>
+      <div class="carte"><span class="numero">2</span><h3>La commerçante parle</h3><p style="margin:0">Quand elle veut, elle envoie un vocal ou un message. Elle reçoit son bilan du jour et la liste de qui lui doit de l'argent.</p></div>
+      <div class="carte"><span class="numero">3</span><h3>L'organisation suit</h3><p style="margin:0">Les chiffres arrivent sur son tableau de bord : par commerçante, par marché, avec des alertes et des rapports.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Pour les organisations -->
+<section id="organisations">
+  <div class="conteneur">
+    <h2>Pour les organisations</h2>
+    <p class="intro">ONG, associations, coopératives, institutions de microfinance, programmes publics : suivez chaque femme, sans quitter votre bureau.</p>
+    <div class="grille g3" style="margin-top:20px">
+      <div class="carte"><h3>Tableau de bord</h3><p style="margin:0">Ventes, bénéfice estimé, crédits à récupérer, évolution sur 8 semaines.</p></div>
+      <div class="carte"><h3>Groupes</h3><p style="margin:0">Par marché ou par projet, pour comparer les résultats.</p></div>
+      <div class="carte"><h3>Alertes</h3><p style="margin:0">Commerçante silencieuse, crédits trop élevés, bénéfice en baisse : vous savez qui appeler.</p></div>
+      <div class="carte"><h3>Rapports</h3><p style="margin:0">Portée, tenue des comptes, résultats économiques : en PDF et en Excel, pour vos bailleurs.</p></div>
+      <div class="carte"><h3>Équipe</h3><p style="margin:0">Invitez vos agents de terrain et vos partenaires, avec des droits adaptés à chacun.</p></div>
+      <div class="carte"><h3>Données protégées</h3><p style="margin:0">Chaque organisation ne voit que ses commerçantes. Mots de passe chiffrés.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Langues -->
+<section class="fond" id="langues">
+  <div class="conteneur">
+    <h2>Les langues</h2>
+    <p class="intro">Nous indiquons honnêtement ce qui fonctionne aujourd'hui, et ce qui est encore en test.</p>
+    <div class="langues">
+      <span class="pastille dispo"><strong>Français</strong> · disponible</span>
+      <span class="pastille dispo"><strong>Fon</strong> · disponible, montants dits en français</span>
+      <span class="pastille"><strong>Yoruba, wolof, bambara, haoussa, mooré, dioula, baoulé, éwé, lingala…</strong> · en test, avec confirmation avant chaque enregistrement</span>
+    </div>
+    <p class="petit" style="margin-top:16px">Avec l'accord des commerçantes, les vocaux aident à améliorer la compréhension de leur langue.</p>
+  </div>
+</section>
+
+<!-- 7. Tarifs -->
+<section id="tarifs">
+  <div class="conteneur">
+    <h2>Tarifs</h2>
+    <p class="intro">Gratuit pour les commerçantes. L'organisation paie par commerçante et par mois : plus elle en accompagne, moins elle paie par personne.</p>
+    <div class="tarifs">
+      <div class="carte tarif"><h3>Essentiel</h3><div class="prix">1 000 F <span>CFA</span></div><p class="petit">par commerçante et par mois, pour les 30 premières</p></div>
+      <div class="carte tarif"><h3>Programme</h3><div class="prix">750 F <span>CFA</span></div><p class="petit">par commerçante et par mois, de la 31e à la 150e</p></div>
+      <div class="carte tarif"><h3>Grand programme</h3><div class="prix">500 F <span>CFA</span></div><p class="petit">par commerçante et par mois, au-delà de 150</p></div>
+    </div>
+    <div class="carte calculateur">
+      <div>
+        <label for="nombre">Combien de commerçantes accompagnez-vous ?</label>
+        <input id="nombre" type="number" min="1" max="100000" value="50" inputmode="numeric">
+      </div>
+      <div class="resultat" id="resultat" aria-live="polite"></div>
+    </div>
+    <p class="petit" style="margin-top:14px">Pendant la phase pilote, la création de compte et l'ajout de commerçantes sont libres. Le paiement en ligne (carte et Mobile Money) arrivera bientôt. Questions : <a href="mailto:contact@voixbilan.com">contact@voixbilan.com</a></p>
+    <div class="boutons"><a class="bouton" href="https://app.voixbilan.com/inscription">Créer un compte</a></div>
+  </div>
+</section>
+
+<!-- 8. Démo -->
+<section class="fond" id="demo">
+  <div class="conteneur">
+    <h2>Essayer la démo</h2>
+    <p class="intro">Une organisation fictive, avec 9 commerçantes et 8 semaines de données, pour tout voir en deux minutes.</p>
+    <div class="demo" style="margin-top:20px">
+      <div class="carte">
+        <h3>1. Le tableau de bord</h3>
+        <p>Connectez-vous avec le compte de démonstration :</p>
+        <div class="identifiants">E-mail : demo@voixbilan.com<br>Mot de passe : demo2026</div>
+        <a class="bouton" href="https://app.voixbilan.com/connexion">Ouvrir la démo</a>
+      </div>
+      <div class="carte">
+        <h3>2. Le bot WhatsApp</h3>
+        <p>Envoyez <strong>DEMO</strong> au numéro de VoixBilan, puis un vocal comme : « J'ai vendu pour 5 000 francs, payé 500 de transport. » Votre message apparaît sur le tableau de bord de démonstration.</p>
+        <!-- REMPLACER 233XXXXXXXXXX par le numéro du bot, sans + ni espaces -->
+        <a class="bouton clair" href="https://wa.me/233207731362?text=DEMO">Tester sur WhatsApp</a>
+      </div>
+    </div>
+    <p class="petit" style="margin-top:16px">Les données de démonstration sont fictives.</p>
+  </div>
+</section>
+
+<!-- 9. Confiance -->
+<section id="confiance">
+  <div class="conteneur">
+    <h2>Confiance</h2>
+    <div class="grille g3" style="margin-top:20px">
+      <div class="carte"><h3>Ses données lui appartiennent</h3><p style="margin:0">Une commerçante n'est suivie qu'avec son accord. Rien n'est partagé sans son consentement.</p></div>
+      <div class="carte"><h3>Cloisonnement</h3><p style="margin:0">Chaque organisation ne voit que ses propres commerçantes.</p></div>
+      <div class="carte"><h3>Transparence</h3><p style="margin:0">Les chiffres sont compris par une IA à partir des messages : nos rapports le précisent, ainsi que leurs limites.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="conteneur pied">
+    <div><strong style="color:var(--texte)">VoixBilan</strong> · Ton bilan en un vocal · Prototype en phase pilote · © 2026</div>
+    <div>
+      <a href="mailto:contact@voixbilan.com">contact@voixbilan.com</a>
+      <a href="https://app.voixbilan.com/conditions">Conditions</a>
+      <a href="https://app.voixbilan.com/confidentialite">Confidentialité</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Calculateur de prix par tranches : 1 000 F (1 à 30), 750 F (31 à 150), 500 F (au-delà)
+(function () {
+  var champ = document.getElementById("nombre");
+  var sortie = document.getElementById("resultat");
+  var f = function (n) { return Math.round(n).toLocaleString("fr-FR") + " F CFA"; };
+  function calculer() {
+    var n = Math.max(0, Math.floor(Number(champ.value) || 0));
+    if (n === 0) { sortie.innerHTML = "Indiquez un nombre de commerçantes."; return; }
+    var t1 = Math.min(n, 30), t2 = Math.min(Math.max(n - 30, 0), 120), t3 = Math.max(n - 150, 0);
+    var total = t1 * 1000 + t2 * 750 + t3 * 500;
+    sortie.innerHTML = "<strong>" + f(total) + " par mois</strong>soit " + f(total / n) + " par commerçante en moyenne";
+  }
+  champ.addEventListener("input", calculer);
+  calculer();
+})();
+</script>
+</body>
+</html>
