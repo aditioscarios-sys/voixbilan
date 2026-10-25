@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 
 app.use(chargerSession);
 app.use(require("./routes/auth"));
+app.use(require("./routes/tableau"));
 app.use(require("./routes/compte"));
 app.use(require("./routes/commercantes"));
 // Page introuvable

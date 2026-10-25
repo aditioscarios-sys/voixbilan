@@ -393,6 +393,11 @@ async function accueillirInconnu(m, id, texteRecu, audio, sock, repondre) {
     return repondre("Ce code n'est pas valable. Vérifie-le auprès de ton organisation, puis renvoie-le.");
   }
 
+    // Des chiffres, mais pas exactement 6 : on explique
+  if (texteRecu && /\d{3,}/.test(texteRecu.replace(/[\s.\-]/g, ""))) {
+    essais.push(maintenant);
+    return repondre("Le code d'activation contient exactement 6 chiffres. Vérifie-le auprès de ton organisation, puis renvoie-le.");
+  }
   if (maintenant - (derniersAvis[id] || 0) < 10 * 60000) return;
   derniersAvis[id] = maintenant;
   return repondre("Bonjour. Ce numéro n'est pas encore activé sur VoixBilan.\nEnvoie le code à 6 chiffres donné par ton organisation, par écrit ou à la voix.");

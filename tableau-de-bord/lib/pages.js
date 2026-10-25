@@ -119,6 +119,18 @@ details.volet[open]>summary{background:var(--blanc);color:var(--texte);border-co
 .montant{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .vide{color:var(--doux);font-size:14px;margin:0}
 @media(max-width:860px){.filtres,.grille-deux{grid-template-columns:minmax(0,1fr)}.chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}.chiffre .valeur{font-size:17px}.code{font-size:28px}}
+/* Tableau de bord */
+.graphique{width:100%;height:auto;display:block}
+.graphique .barre{fill:var(--accent)}
+.graphique .axe{stroke:var(--ligne);stroke-width:1}
+.graphique .etiquette{fill:var(--doux);font-size:15px}
+.graphique .valeur-barre{fill:var(--texte);font-size:15px;font-weight:600}
+.variation{font-size:13px;margin-top:4px}
+.filtres-tableau{grid-template-columns:repeat(auto-fit,minmax(180px,260px))}
+@media(max-width:860px){.filtres-tableau{grid-template-columns:minmax(0,1fr)}}
+.entete-tableau{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.entete-tableau .filtres{margin:0;grid-template-columns:repeat(2,minmax(170px,220px))}
+@media(max-width:860px){.entete-tableau .filtres{grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%}}
 /* Tablette et téléphone */
 @media(max-width:860px){
   .cadre{grid-template-columns:minmax(0,1fr)}
@@ -211,7 +223,7 @@ function pageApp(titre, req, contenu, actif = "") {
   const u = req.utilisateur;
   const o = req.organisation;
   const lien = (href, texte, cle) => `<a href="${href}" class="${actif === cle ? "actif" : ""}">${texte}</a>`;
-    const menu = [lien("/", "Tableau de bord", "accueil"), lien("/commercantes", "Commerçantes", "commercantes"), lien("/groupes", "Groupes", "groupes")];
+      const menu = [lien("/", "Tableau de bord", "accueil"), lien("/commercantes", "Commerçantes", "commercantes"), lien("/groupes", "Groupes", "groupes"), lien("/alertes", "Alertes", "alertes")];
   if (u.role === "administrateur") menu.push(lien("/equipe", "Équipe", "equipe"));
   menu.push(lien("/parametres", "Paramètres", "parametres"));
   return `${tete(titre)}<body>

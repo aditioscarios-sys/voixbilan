@@ -10,8 +10,7 @@ const { TYPES_ORGANISATION, ROLES, DESCRIPTION_ROLES, DEVISES, infosPays } = req
 const router = express.Router();
 const a = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 const JOUR = 24 * 3600 * 1000;
-const dateFr = (d) => (d ? new Date(d).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—");
-
+const { dateFr } = require("../lib/temps");
 const exigerConnexion = (req, res, next) => (req.utilisateur ? next() : res.redirect("/connexion"));
 const exigerAdmin = (req, res, next) => {
   if (!req.utilisateur) return res.redirect("/connexion");
@@ -21,21 +20,7 @@ const exigerAdmin = (req, res, next) => {
   next();
 };
 
-// ---------- Tableau de bord (accueil) ----------
-router.get("/", exigerConnexion, (req, res) => {
-  const u = req.utilisateur;
-  const o = req.organisation;
-  const equipe = u.role === "administrateur" ? '<a class="lien" href="/equipe">Invitez votre équipe</a> : agents de terrain, responsables, partenaires.' : "Votre administrateur peut inviter d'autres membres de l'équipe.";
-  res.send(pageApp("Tableau de bord", req, `<h1>Bonjour, ${esc(u.nom)}</h1>
-    <p class="sous-titre">${esc(o.nom)} · ${esc(o.ville)}, ${esc(o.pays)}</p>
-    ${req.query.bienvenue ? note("vert", "Votre adresse e-mail est confirmée. Bienvenue sur VoixBilan.") : ""}
-        <div class="bloc"><h2>Pour bien démarrer</h2><ol class="etapes">
-      <li><a class="lien" href="/groupes">Créez vos groupes</a>, par marché ou par projet.</li>
-      <li><a class="lien" href="/commercantes/ajouter">Ajoutez vos commerçantes</a> : chacune reçoit un code d'activation à 6 chiffres.</li>
-      <li>Chaque commerçante envoie son code au numéro WhatsApp de VoixBilan, puis ses vocaux chaque jour.</li>
-      <li>${equipe}</li>
-        </ol><p class="petit" style="margin:12px 0 0">Les chiffres de toutes vos commerçantes, le graphique et les alertes arrivent dans la prochaine mise à jour.</p></div>`, "accueil"));
-});
+
 
 // ---------- Paramètres ----------
 const OK_PARAM = { organisation: "Les informations de l'organisation ont été enregistrées.", profil: "Votre profil a été enregistré.", motdepasse: "Votre mot de passe a été modifié." };

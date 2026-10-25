@@ -22,9 +22,7 @@ const exigerEdition = (req, res, next) => {
 };
 const peutModifier = (req) => req.utilisateur.role !== "lecture";
 
-const dateFr = (d, avecHeure = true) => (d ? new Date(d).toLocaleString("fr-FR", avecHeure
-  ? { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }
-  : { day: "2-digit", month: "2-digit", year: "numeric" }) : "—");
+const { dateFr, debutDuMois, nomMois: nomDuMois } = require("../lib/temps");
 
 function montant(n, devise) {
   const unite = devise === "XOF" || devise === "XAF" ? "F CFA" : devise;
@@ -353,7 +351,7 @@ router.get("/commercantes/:id", exigerConnexion, a(async (req, res) => {
 
   // Chiffres du mois en cours
   const maintenant = new Date();
-  const debutMois = new Date(maintenant.getFullYear(), maintenant.getMonth(), 1);
+  const debutMois = debutDuMois();
   const totaux = await db.requete(
     "SELECT type, SUM(montant) AS total FROM operations WHERE commercante_id = ? AND annulee = 0 AND date_operation >= ? GROUP BY type",
     [c.id, debutMois]
@@ -400,7 +398,11 @@ router.get("/commercantes/:id", exigerConnexion, a(async (req, res) => {
     </div>` : "";
 
   const lignesOperations = operations.map((op) => {
-    const detail = [op.produit, op.quantite ? `${Number(op.quantite)} unité(s)` : "", op.client, op.description].filter(Boolean).map(esc).join(" · ");
+    const morceaux = [];
+    if (op.produit) morceaux.push(esc(sec.majuscule(op.produit)) + (Number(op.quantite) ? ` (${Number(op.quantite)})` : ""));
+    if (op.client) morceaux.push(`Client : ${esc(op.client)}`);
+    if (!morceaux.length && op.description) morceaux.push(esc(op.description));
+    const detail = morceaux.join(" · ");
     return `<tr>
       <td data-label="Date" class="petit">${dateFr(op.date_operation)}</td>
       <td data-label="Opération">${TYPES_OPERATION[op.type] || op.type}</td>
@@ -421,14 +423,14 @@ router.get("/commercantes/:id", exigerConnexion, a(async (req, res) => {
       <tr><th>Vocaux conservés</th><td>${c.accord_vocaux ? "Oui, avec son accord" : "Non"}</td></tr>
     </tbody></table>`;
 
-  const nomMois = maintenant.toLocaleString("fr-FR", { month: "long" });
+  const nomMois = nomDuMois();
   const sousTitre = [c.groupe_nom, c.activite, c.marche].filter(Boolean).map(esc).join(" · ");
 
   res.send(pageApp(c.nom, req, `
     <p style="margin:0 0 8px"><a class="lien petit" href="/commercantes">Retour à la liste</a></p>
     ${enteteAvecBouton(`${esc(c.nom)} <span style="font-size:14px;font-weight:400;vertical-align:middle">${statutCommercante(c)}</span>`, sousTitre, actions)}
-        ${OK_FICHE[req.query.ok] ? note("vert", OK_FICHE[req.query.ok]) : ""}
-    ${req.query.erreur === "confirmation" ? note("rouge", "Pour supprimer, tapez exactement le mot SUPPRIMER.") : ""}
+${OK_FICHE[req.query.ok] && !(req.query.ok === "ajoutee" && c.activee_le) ? note("vert", OK_FICHE[req.query.ok]) : ""}
+${req.query.erreur === "confirmation" ? note("rouge", "Pour supprimer, tapez exactement le mot SUPPRIMER.") : ""}
     ${blocCode}
     <div class="chiffres">
       <div class="chiffre"><div class="libelle">Ventes (${nomMois})</div><div class="valeur">${m(ventes)}</div></div>
