@@ -78,7 +78,23 @@ Login: https://app.voixbilan.com/connexion
 
 GitHub repository: https://github.com/aditioscarios-sys/voixbilan
 
-Product demonstration: [Insert your Google Drive video link here]
+Product demonstration: https://drive.google.com/file/d/178KLPO_9m0Yd8IDhPOZjH_Mnpc4EAUiC/view?usp=sharing
+
+## Live Demo
+
+Explore the VoixBilan web application using the dedicated demo account.
+
+- **Application:** https://app.voixbilan.com/connexion
+- **Email:** demo@voixbilan.com
+- **Password:** demo2026
+
+### About the Demo
+
+This dedicated demonstration account provides access to a prototype environment using fictitious business data.
+
+Some actions are restricted to protect the demonstration environment. The prototype is still under development, and its features are being improved through testing and validation.
+
+Please do not enter personal, confidential, or real business information into the demo environment.
 
 Current Status
 
@@ -100,7 +116,7 @@ Preparing the platform for field testing and potential deployment.
 
 Project Costs
 
-To date, the confirmed direct expense for VoixBilan is $11.99 for domain registration.
+To date, the confirmed direct expense for VoixBilan is $11.99 for domain and 29.79 for hosting.
 
 The project currently uses the Google Gemini API under its free-tier arrangement.
 
